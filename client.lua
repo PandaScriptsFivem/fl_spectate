@@ -12,6 +12,10 @@ Panel = {
 			self:kick(...)
 		end)
 
+		RegisterNUICallback("setjobplayer", function(...)
+			self:setjobplayer(...)
+		end)
+
 		RegisterNUICallback("close", function(...)
 			self:close(...)
 		end)
@@ -113,6 +117,20 @@ Panel = {
 			self:update(players)
 			cb('ok')
 		end, tonumber(data.player.serverId), data.reason)
+	end,
+
+	setjobplayer = function(self, data, cb)
+		if (not data.player or not data.player.serverId) or not data.job and not data.grade then
+			return cb('ok')
+		end
+
+		ESX.TriggerServerCallback("SetjobPlayer", function(players)
+			if not players then
+				return self:close()
+			end
+			self:update(players)
+			cb('ok')
+		end, tonumber(data.player.serverId), data.job, data.grade)
 	end,
 
 	spectateoff = function(self)

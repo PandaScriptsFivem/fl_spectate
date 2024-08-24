@@ -47,9 +47,11 @@
           <div class="player-list pe-1">
             <div class="row text-center">
               <div class="col col-1">ID</div>
-              <div class="col col-3">Name</div>
+              <div class="col col-1">Bank</div>
+              <div class="col col-1">Money</div>
+              <div class="col col-2">Name</div>
               <div class="col col-1">Group</div>
-              <div class="col col-5">Job</div>
+              <div class="col col-4">Job</div>
               <div class="col col-2">{{ players.length }} <i class="fas fa-dot-circle text-success blinking"></i></div>
             </div>
 
@@ -57,13 +59,19 @@
 
             <div v-for="player in filteredPlayers" class="row text-center align-items-center mt-1">
               <div class="col col-1">{{ player.serverId ?? 'nincs' }}</div>
-              <div class="col col-3">{{ player.name }}</div>
+              <div class="col col-1">{{ player.bank }}</div>
+              <div class="col col-1">{{ player.money }}</div>
+              <div class="col col-2">{{ player.name }}</div>
               <div class="col col-1">{{ player.group }}</div>
-              <div class="col col-5">{{ player.jobText }}</div>
+              <div class="col col-4">{{ player.jobText }}</div>
               <div class="col col-2 d-flex justify-content-end">
                 <button @click="spectate(player)" class="btn btn-sm btn-secondary me-1">
                   <i class="fas fa-eye"></i>
                   Spectate
+                </button>
+                <button @click="setjob(player)" class="btn btn-sm btn-secondary me-1">
+                  <i class="fas fa-briefcase"></i>
+                  Setjob
                 </button>
                 <button @click="kick(player)" class="btn btn-sm btn-danger">
                   <i class="fas fa-user-alt-slash"></i>

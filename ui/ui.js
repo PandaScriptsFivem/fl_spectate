@@ -58,7 +58,33 @@ const App = Vue.createApp({
         }),
       });
     },
+    async setjob(player) { /** */
+      const { value: job, value2: grade} = await Swal.fire({
+        title: 'Enter a job',
+        input: 'text',
+        showCancelButton: true,
+        inputValidator: (value, value2) => {
+          if (!value) {
+            return 'You need to write something!';
+          } else if (!value2) {
+            return 'asdsad';
+          }
+        },
+
+      });
+      if (!job, !grade) return;
+
+      fetch(`https://${GetParentResourceName()}/setjobplayer`, {
+        method: 'POST',
+        body: JSON.stringify({
+          player,
+          job,
+          grade,
+        }),
+      });
+    },
   },
+  
   mounted() {
     window.addEventListener('message', ({ data }) => {
       if (data.visible !== undefined) this.visible = data.visible;
