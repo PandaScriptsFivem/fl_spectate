@@ -36,50 +36,19 @@ const App = Vue.createApp({
         }),
       });
     },
-    async kick(player) {
-      const { value: reason } = await Swal.fire({
-        title: 'Enter kick reason',
-        input: 'text',
-        showCancelButton: true,
-        inputValidator: (value) => {
-          if (!value) {
-            return 'You need to write something!';
-          }
-        },
-      });
-
-      if (!reason) return;
-
-      fetch(`https://${GetParentResourceName()}/kick`, {
-        method: 'POST',
-        body: JSON.stringify({
-          player,
-          reason,
-        }),
-      });
-    },
-    async setjob(player) { /** */
-      const { value: job, value2: grade} = await Swal.fire({
-        title: 'Enter a job',
-        input: 'text',
-        showCancelButton: true,
-        inputValidator: (value, value2) => {
-          if (!value) {
-            return 'You need to write something!';
-          } else if (!value2) {
-            return 'asdsad';
-          }
-        },
-
-      });
-      if (!job, !grade) return;
-
+    setjob(player) {
       fetch(`https://${GetParentResourceName()}/setjobplayer`, {
         method: 'POST',
         body: JSON.stringify({
           player,
-          job,
-          grade,
+        }),
+      });
+    },
+    kick(player) {
+      fetch(`https://${GetParentResourceName()}/kick`, {
+        method: 'POST',
+        body: JSON.stringify({
+          player
         }),
       });
     },

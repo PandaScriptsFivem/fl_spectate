@@ -1,3 +1,6 @@
+ESX = exports["es_extended"]:getSharedObject()
+
+
 function formatMoney(amount)
 	local suffixes = { "K", "M", "B"}
 	local divisors = { 1000, 1000000, 1000000000}
@@ -78,19 +81,18 @@ ESX.RegisterServerCallback("kickPlayerSpectate", function(source, cb, target, re
 		return
 	end
 
-	DropPlayer(target, ("Kicked from the server.\nReason: %s\nAdmin: %s"):format(reason, GetPlayerName(source)))
+	
 
 	cb(getPlayerList())
 end)
 
-ESX.RegisterServerCallback("SetjobPlayer", function(source, cb, target, job, grade)
+RegisterNetEvent("fl_spectate:kickplayer", function(source, cb, reason, playerId)
 	local xSource = ESX.GetPlayerFromId(source)
 	if not xSource or not ALLOWED_GROUPS[xSource.getGroup()] then
 		return
 	end
-	xSource.setJob(job, grade)
-	
-
+	print(playerId .. " " .. reason)
+	--DropPlayer(playerId, ("Kicked from the server.\nReason: %s\nAdmin: %s"):format(reason, GetPlayerName(source)))
 	cb(getPlayerList())
 end)
 

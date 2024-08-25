@@ -8,12 +8,22 @@ Panel = {
 			self:spectate(...)
 		end)
 
-		RegisterNUICallback("kick", function(...)
-			self:kick(...)
+		RegisterNUICallback("kick", function(data, cb)
+			local input1 = lib.inputDialog('Kick Player', {'Indok'})
+			local reason = input1[1]
+
+
+			local playerId = data.player.serverId
+			TriggerServerEvent("fl_spectate:kickplayer", reason, playerId)
 		end)
 
-		RegisterNUICallback("setjobplayer", function(...)
-			self:setjobplayer(...)
+		RegisterNUICallback("setjobplayer", function(data, cb)
+			local input = lib.inputDialog('Setjob Player', {'Job Name', 'Grade Number'})
+			local job = input[1]
+			local grade = input[2]
+			local playerId = data.player.serverId
+		
+			ExecuteCommand("setjob " .. playerId .. " " .. job .. " " .. grade)
 		end)
 
 		RegisterNUICallback("close", function(...)
@@ -103,34 +113,6 @@ Panel = {
 		end, serverId)
 
 		self:close()
-	end,
-
-	kick = function(self, data, cb)
-		if (not data.player or not data.player.serverId) or not data.reason then
-			return cb('ok')
-		end
-
-		ESX.TriggerServerCallback("kickPlayerSpectate", function(players)
-			if not players then
-				return self:close()
-			end
-			self:update(players)
-			cb('ok')
-		end, tonumber(data.player.serverId), data.reason)
-	end,
-
-	setjobplayer = function(self, data, cb)
-		if (not data.player or not data.player.serverId) or not data.job and not data.grade then
-			return cb('ok')
-		end
-
-		ESX.TriggerServerCallback("SetjobPlayer", function(players)
-			if not players then
-				return self:close()
-			end
-			self:update(players)
-			cb('ok')
-		end, tonumber(data.player.serverId), data.job, data.grade)
 	end,
 
 	spectateoff = function(self)
