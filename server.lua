@@ -91,8 +91,8 @@ RegisterNetEvent("fl_spectate:kickplayer", function(source, cb, reason, playerId
 	if not xSource or not ALLOWED_GROUPS[xSource.getGroup()] then
 		return
 	end
-	print(playerId .. " " .. reason)
-	--DropPlayer(playerId, ("Kicked from the server.\nReason: %s\nAdmin: %s"):format(reason, GetPlayerName(source)))
+	--print(playerId .. " " .. reason)
+	DropPlayer(playerId, ("Kicked from the server.\nReason: %s\nAdmin: %s"):format(reason, GetPlayerName(source)))
 	cb(getPlayerList())
 end)
 
